@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navi"
+    app:startDestination="@id/powerCostFragment">
+
+    <fragment
+        android:id="@+id/powerCostFragment"
+        android:name="com.abunayla.wattson.ui.fragments.PowerCostFragment"
+        android:label="fragment_power_cost"
+        tools:layout="@layout/fragment_power_cost" />
+</navigation>
