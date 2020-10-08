@@ -16,12 +16,10 @@ abstract class PowerCostDatabase: RoomDatabase() {
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        PowerCostDatabase::class.java,
-                        "power_cost_db_jul_2020.db"
-                    )
-                        .createFromAsset("database/power_cost_july_2020.sqlite")
+                    instance = Room.databaseBuilder(context.applicationContext,
+                        PowerCostDatabase::class.java, "db1.db")
+                        .createFromAsset("database/db1.db")
+                        .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance
                 }

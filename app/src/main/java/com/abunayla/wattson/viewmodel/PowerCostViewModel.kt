@@ -23,7 +23,7 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
 
         viewModelScope.launch(Dispatchers.IO) {
             val data = repository.readPowerCost(isoCode)
-            //cost.value = data.first().cost
+            cost.postValue(data.first().cost)
         }
         return cost
     }

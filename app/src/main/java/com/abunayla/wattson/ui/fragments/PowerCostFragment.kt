@@ -23,7 +23,7 @@ class PowerCostFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_power_cost, container, false)
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
-        viewModel.readPowerCost("DE").observe(viewLifecycleOwner, Observer {
+        viewModel.readPowerCost("IQ").observe(viewLifecycleOwner, Observer {
             tvShowData.text = it.toString()
         })
 
