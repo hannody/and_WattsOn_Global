@@ -17,8 +17,8 @@ abstract class PowerCostDatabase: RoomDatabase() {
                 var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.applicationContext,
-                        PowerCostDatabase::class.java, "db1.db")
-                        .createFromAsset("database/db1.db")
+                        PowerCostDatabase::class.java, "power_cost_jul_2020.db")
+                        .createFromAsset("database/power_cost_july_2020.sqlite")
                         .fallbackToDestructiveMigration()
                         .build()
                     INSTANCE = instance

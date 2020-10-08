@@ -5,10 +5,9 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "test_table", indices = [Index(value =["iso_code","cost", "currency"])])
+private const val tableName = "power_cost_table"
+@Entity(tableName = tableName, indices = [Index(value =["iso_code","cost", "currency"])])
 data class PowerCost (
-
-
     @NonNull
     var cost: Double,
     @PrimaryKey
