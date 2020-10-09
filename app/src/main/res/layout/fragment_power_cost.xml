@@ -52,4 +52,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvShowCurrency"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryPicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="174dp"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_defaultNameCode="DE"
+        app:ccp_rememberLastSelection="true"
+        app:ccp_showFullName="true"
+        app:ccp_showNameCode="false"
+        app:ccp_showPhoneCode="false"
+        app:ccp_excludedCountries=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvShowCost" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -55,6 +55,7 @@ dependencies {
     def room_version = "2.2.5"
     def nav_version = "2.3.0"
     def material_version = "1.2.1"
+    def country_pick_version = "2.4.0"
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
@@ -67,4 +68,7 @@ dependencies {
 
     // Material Design
     implementation "com.google.android.material:material:$material_version"
+
+    // Country Picker
+    implementation "com.hbb20:ccp:$country_pick_version"
 }
