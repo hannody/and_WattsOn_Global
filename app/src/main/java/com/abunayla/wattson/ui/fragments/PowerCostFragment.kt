@@ -1,12 +1,13 @@
 package com.abunayla.wattson.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Debug
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
@@ -14,6 +15,7 @@ import com.hbb20.CountryCodePicker
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 
 class PowerCostFragment : Fragment() {
+    private val TAG = "PowerCostFragment"
     private lateinit var viewModel: PowerCostViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,26 +28,29 @@ class PowerCostFragment : Fragment() {
         var currentSelection: String = countryPicker.selectedCountryNameCode
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
-        viewModel.readPowerCost(currentSelection).observe(
-            viewLifecycleOwner, Observer {
-                tvShowCost.text = it.first().cost.toString()
-                tvShowCurrency.text = it.first().currency
-                tvshowIsoCode.text = it.first().iso_code
-            })
-
+        dataIntegrityCheckAndSet(viewModel, currentSelection)
 
         countryPicker.setOnCountryChangeListener {
             currentSelection = countryPicker.selectedCountryNameCode
-            viewModel.readPowerCost(currentSelection).observe(
-                viewLifecycleOwner, Observer {
-                    tvShowCost.text = it.first().cost.toString()
-                    tvShowCurrency.text = it.first().currency
-                    tvshowIsoCode.text = it.first().iso_code
-                })
-
+            dataIntegrityCheckAndSet(viewModel, currentSelection)
         }
-
         return view
+    }
+
+    private fun dataIntegrityCheckAndSet(viewModel: PowerCostViewModel, currentSelection: String) {
+        viewModel.readPowerCost(currentSelection).observe(
+            viewLifecycleOwner, Observer {
+                try {
+                    tvShowCost.text = it.cost.toString()
+                    tvShowCurrency.text = it.currency
+                    tvshowIsoCode.text = it.iso_code
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message.toString())
+                    tvShowCost.text = "No Available Data for:\n ${countryPicker.selectedCountryName} "
+                    tvShowCurrency.text = ""
+                    tvshowIsoCode.text= "Please choose another country"
+                }
+            })
     }
 
 }
