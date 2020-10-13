@@ -12,6 +12,7 @@ import com.abunayla.wattson.repository.PowerCostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.util.*
 
 class PowerCostViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PowerCostRepository
@@ -26,7 +27,7 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
         var data = MutableLiveData<PowerCost>()
 
         viewModelScope.launch(Dispatchers.IO) {
-            data.postValue((repository.readPowerCost(isoCode)))
+            data.postValue((repository.readPowerCost(isoCode.capitalize(Locale.ROOT))))
         }
         return data
     }

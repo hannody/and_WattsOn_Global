@@ -1,17 +1,21 @@
 package com.abunayla.wattson.ui.fragments
 
 import android.os.Bundle
-import android.os.Debug
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
 import com.hbb20.CountryCodePicker
+import com.sdsmdg.harjot.crollerTest.Croller
+import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
+
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 
 class PowerCostFragment : Fragment() {
@@ -34,6 +38,20 @@ class PowerCostFragment : Fragment() {
             currentSelection = countryPicker.selectedCountryNameCode
             dataIntegrityCheckAndSet(viewModel, currentSelection)
         }
+
+        val sbHoursPerDay = view.findViewById<View>(R.id.sbHours) as Croller
+
+        sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener{
+            override fun onProgressChanged(croller: Croller?, progress: Int) {
+                tvHoursPerDay.text = "$progress  Hour(s) A Day"
+            }
+
+            override fun onStartTrackingTouch(croller: Croller?) {}
+
+            override fun onStopTrackingTouch(croller: Croller?) {}
+        })
+
+
         return view
     }
 

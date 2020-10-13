@@ -45,7 +45,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -56,6 +56,7 @@ dependencies {
     def nav_version = "2.3.0"
     def material_version = "1.2.1"
     def country_pick_version = "2.4.0"
+
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
@@ -71,4 +72,7 @@ dependencies {
 
     // Country Picker
     implementation "com.hbb20:ccp:$country_pick_version"
+
+   // Circular Seekbar https://github.com/harjot-oberai/Croller
+    implementation'com.sdsmdg.harjot:croller:1.0.7'
 }
