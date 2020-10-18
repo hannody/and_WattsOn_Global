@@ -1,27 +1,22 @@
 package com.abunayla.wattson.ui.fragments
 
 import android.os.Bundle
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
-import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
 import com.hbb20.CountryCodePicker
 import com.sdsmdg.harjot.crollerTest.Croller
 import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
-
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 
 class PowerCostFragment : Fragment() {
-    private val TAG = "PowerCostFragment"
     private lateinit var viewModel: PowerCostViewModel
+    private lateinit var sbProgressText: String
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +26,7 @@ class PowerCostFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_power_cost, container, false)
         val countryPicker = view.findViewById<CountryCodePicker>(R.id.countryPicker)
         var currentSelection: String = countryPicker.selectedCountryNameCode
+        sbProgressText = getString(R.string.str_seekBar_prog_txt)
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
         dataIntegrityCheckAndSet(viewModel, currentSelection)
@@ -44,14 +40,13 @@ class PowerCostFragment : Fragment() {
 
         sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                tvHoursPerDay.text = "$progress  Hour(s) A Day"
+                tvSeekbarProgress.text = "$progress" + sbProgressText
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {}
 
             override fun onStopTrackingTouch(croller: Croller?) {}
         })
-
 
         return view
     }

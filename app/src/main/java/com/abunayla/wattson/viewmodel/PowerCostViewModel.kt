@@ -1,9 +1,7 @@
 package com.abunayla.wattson.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.abunayla.wattson.db.PowerCost
@@ -11,7 +9,6 @@ import com.abunayla.wattson.db.PowerCostDatabase
 import com.abunayla.wattson.repository.PowerCostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.util.*
 
 class PowerCostViewModel(application: Application): AndroidViewModel(application) {
@@ -24,7 +21,7 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
 
 
     fun readPowerCost(isoCode: String): MutableLiveData<PowerCost> {
-        var data = MutableLiveData<PowerCost>()
+        val data = MutableLiveData<PowerCost>()
 
         viewModelScope.launch(Dispatchers.IO) {
             data.postValue((repository.readPowerCost(isoCode.capitalize(Locale.ROOT))))

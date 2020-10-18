@@ -73,6 +73,7 @@ dependencies {
     // Country Picker
     implementation "com.hbb20:ccp:$country_pick_version"
 
-   // Circular Seekbar https://github.com/harjot-oberai/Croller
+   // Circular seekbar Seekbar https://github.com/harjot-oberai/Croller
     implementation'com.sdsmdg.harjot:croller:1.0.7'
+
 }

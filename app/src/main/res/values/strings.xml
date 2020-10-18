@@ -1,5 +1,17 @@
 <resources>
+
+    <!-- Cost Text and Values Views Holders-->
     <string name="app_name">Watts On</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_h_cost">Cost per hour:</string>
+    <string name="str_d_cost">Daily Cost:</string>
+    <string name="str_w_cost">Weekly Cost:</string>
+    <string name="str_m_cost">Monthly Cost:</string>
+    <string name="str_y_cost">Yearly Cost:</string>
+
+
+    <!-- Country Picker-->
+    <string name="str_select_country">Choose a country:</string>
+
+    <!-- Seek-bar progress text -->
+    <string name="str_seekBar_prog_txt">" Hour(s) a day"</string>
 </resources>
