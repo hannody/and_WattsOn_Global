@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
+import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
 import com.hbb20.CountryCodePicker
 import com.sdsmdg.harjot.crollerTest.Croller
@@ -58,16 +59,13 @@ class PowerCostFragment : Fragment() {
     private fun dataIntegrityCheckAndSet(viewModel: PowerCostViewModel, currentSelection: String) {
         viewModel.readPowerCost(currentSelection).observe(
             viewLifecycleOwner, Observer {
-                try {
-                    tvShowCost.text = it.cost.toString()
-                    tvShowCurrency.text = it.currency
-                    tvshowIsoCode.text = it.iso_code
-                } catch (e: Exception) {
-                    Log.e(TAG, e.message.toString())
-                    tvShowCost.text = "No Available Data for:\n ${countryPicker.selectedCountryName} "
-                    tvShowCurrency.text = ""
-                    tvshowIsoCode.text= "Please choose another country"
-                }
+//                try {
+//                    var h = PowerCostCalculator().countHourCost(etWatts.text.toString().toInt(), it.cost)
+//                    tvHourlyCost.text = h.toString()
+//
+//                } catch (e: Exception) {
+//                    Log.e(TAG, e.message.toString())
+//                }
             })
     }
 
