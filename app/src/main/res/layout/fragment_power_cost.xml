@@ -75,10 +75,10 @@
         android:layout_marginTop="16dp"
         android:text="@string/str_h_cost"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
+        app:layout_constraintTop_toBottomOf="@+id/etWatts" />
 
     <TextView
-        android:id="@+id/tvDayCost"
+        android:id="@+id/tvDCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -87,29 +87,44 @@
         app:layout_constraintTop_toBottomOf="@+id/tvHCost" />
 
     <TextView
-        android:id="@+id/tvWeekCost"
+        android:id="@+id/tvWCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/str_w_cost"
         app:layout_constraintStart_toStartOf="@+id/tvHCost"
-        app:layout_constraintTop_toBottomOf="@+id/tvDayCost" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDCost" />
 
     <TextView
-        android:id="@+id/tvMonthCost"
+        android:id="@+id/tvMCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/str_m_cost"
         app:layout_constraintStart_toStartOf="@+id/tvHCost"
-        app:layout_constraintTop_toBottomOf="@+id/tvWeekCost" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWCost" />
 
     <TextView
+        android:id="@+id/tvYCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/str_y_cost"
         app:layout_constraintStart_toStartOf="@+id/tvHCost"
-        app:layout_constraintTop_toBottomOf="@+id/tvMonthCost" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMCost" />
+
+    <EditText
+        android:id="@+id/etWatts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Enter watts here, e.g. 1000"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
