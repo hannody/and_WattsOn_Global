@@ -4,7 +4,7 @@ class PowerCostCalculator {
     companion object {
         fun countHourCost(watts: Int = 1, kWh_cost: Double): Double {
             val wh: Double = watts / 1000.00
-            return (wh * kWh_cost / 100.00)
+            return (wh * kWh_cost)
         }
 
         fun countDailyCost(hours_per_day: Int, one_hour_cost: Double): Double {

@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
+import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
 import com.hbb20.CountryCodePicker
 import com.sdsmdg.harjot.crollerTest.Croller
 import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.fragment_power_cost.*
+import java.text.DecimalFormat
 import java.util.*
-import kotlin.concurrent.schedule
 
 
 class PowerCostFragment : Fragment() {
@@ -68,17 +69,21 @@ class PowerCostFragment : Fragment() {
         timer = Timer()
         wattsInput.doAfterTextChanged {
             if (wattsInput.text.isNotEmpty()) {
-                timer.cancel()
-                timer = Timer()
-                //watts = wattsInput.text.toString().toInt()
-                timer.schedule(1500) {
-                    Log.i("TAG", "Watts INPUT EVENET!")
-                    watts = wattsInput.text.toString().toInt()
-                }
-            }else{
-                timer.cancel()
-            }
+//                timer.cancel()
+//                timer = Timer()
+//                //watts = wattsInput.text.toString().toInt()
+//                timer.schedule(1500) {
+//                    Log.i("TAG", "Watts INPUT EVENET!")
+//                    watts = wattsInput.text.toString().toInt()
+//                    dataIntegrityCheckAndSet(viewModel, countryPicker.selectedCountryNameCode)
+//                }
+//            }else{
+//                timer.cancel()
+//            }
+                watts = wattsInput.text.toString().toInt()
+                dataIntegrityCheckAndSet(viewModel, countryPicker.selectedCountryNameCode)
 
+            }
         }
         // Inflate the layout for this fragment
         return view
@@ -100,6 +105,30 @@ class PowerCostFragment : Fragment() {
                     Log.e("TAG", e.message.toString())
                 }
             })
+        if(watts!=0){
+        calculatePowerCost()
+        }
+    }
+
+    private fun calculatePowerCost(){
+        val costPerHour =PowerCostCalculator.countHourCost(watts, cost)
+        val costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
+        val costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
+        val costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
+        val costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
+
+
+        val decimalFormat = DecimalFormat("#.###")
+        //decimalFormat.roundingMode = RoundingMode.CEILING
+
+        tvHCost.text = hCostTxt.plus(decimalFormat.format(costPerHour))
+        tvDCost.text = decimalFormat.format(costPerDay)
+        tvWCost.text = decimalFormat.format(costPerWeek)
+        tvMCost.text = decimalFormat.format(costPerMonth)
+        tvYCost.text = decimalFormat.format(costPerYear)
+
+        //Log.i("TAG2","$hoursPerDay $cost")
+//        Log.i("TAG2",PowerCostCalculator.countHourCost(watts, cost).toString())
     }
 
 }
