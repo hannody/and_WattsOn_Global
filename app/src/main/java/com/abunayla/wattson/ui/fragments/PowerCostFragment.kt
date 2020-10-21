@@ -18,7 +18,6 @@ import com.sdsmdg.harjot.crollerTest.Croller
 import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 import java.text.DecimalFormat
-import java.util.*
 
 
 class PowerCostFragment : Fragment() {
@@ -30,7 +29,7 @@ class PowerCostFragment : Fragment() {
     private var isoCode: String = ""
     private var watts: Int = 0
     private var hoursPerDay = 1
-    private lateinit var timer: Timer
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,18 +45,26 @@ class PowerCostFragment : Fragment() {
         hCostTxt = getString(R.string.str_h_cost)
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
+        currentSelection = countryPicker.selectedCountryNameCode
+        fetchFreshCostData(viewModel, currentSelection)
 
+
+        // Country Picker
         countryPicker.setOnCountryChangeListener {
+            // Change of country requires new data fetching.
             currentSelection = countryPicker.selectedCountryNameCode
-            dataIntegrityCheckAndSet(viewModel, currentSelection)
+            fetchFreshCostData(viewModel, currentSelection)
         }
 
 
+        // Hours per day seek bar
         sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener{
             override fun onProgressChanged(croller: Croller?, progress: Int) {
                 tvSeekbarProgress.text = "$progress" + sbProgressText
                 // Update number of hours per day to take the progress
                 hoursPerDay = progress
+                // Recalculate cost data without fetching new data.
+                calculatePowerCost(watts)
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {}
@@ -65,38 +72,24 @@ class PowerCostFragment : Fragment() {
             override fun onStopTrackingTouch(croller: Croller?) {}
         })
 
- //Watts input (editText events)
-        timer = Timer()
+        // Watts input (editText events)
         wattsInput.doAfterTextChanged {
-            if (wattsInput.text.isNotEmpty()) {
-//                timer.cancel()
-//                timer = Timer()
-//                //watts = wattsInput.text.toString().toInt()
-//                timer.schedule(1500) {
-//                    Log.i("TAG", "Watts INPUT EVENET!")
-//                    watts = wattsInput.text.toString().toInt()
-//                    dataIntegrityCheckAndSet(viewModel, countryPicker.selectedCountryNameCode)
-//                }
-//            }else{
-//                timer.cancel()
-//            }
-                watts = wattsInput.text.toString().toInt()
-                dataIntegrityCheckAndSet(viewModel, countryPicker.selectedCountryNameCode)
-
-            }
+            watts = wattsInput.text.toString().toInt()
+            calculatePowerCost(watts)
         }
         // Inflate the layout for this fragment
         return view
     }
 
-    private fun dataIntegrityCheckAndSet(viewModel: PowerCostViewModel, currentSelection: String) {
+    private fun fetchFreshCostData(viewModel: PowerCostViewModel, currentSelection: String) {
         viewModel.readPowerCost(currentSelection).observe(
             viewLifecycleOwner, Observer {
                 try {
                     cost = it.cost
                     isoCode = it.iso_code
                     currency = it.currency
-                    Log.i("TAG", "$cost $isoCode $currency $watts $hoursPerDay")
+                    Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
+                    calculatePowerCost(watts)
                 } catch (e: Exception) {
                     cost = 0.toDouble()
 
@@ -105,30 +98,26 @@ class PowerCostFragment : Fragment() {
                     Log.e("TAG", e.message.toString())
                 }
             })
-        if(watts!=0){
-        calculatePowerCost()
-        }
     }
 
-    private fun calculatePowerCost(){
-        val costPerHour =PowerCostCalculator.countHourCost(watts, cost)
-        val costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
-        val costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
-        val costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
-        val costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
+    private fun calculatePowerCost(watts: Int) {
+        if (watts != 0) {
+            val costPerHour = PowerCostCalculator.countHourCost(watts, cost)
+            val costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
+            val costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
+            val costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
+            val costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
 
 
-        val decimalFormat = DecimalFormat("#.###")
-        //decimalFormat.roundingMode = RoundingMode.CEILING
+            val decimalFormat = DecimalFormat("#.##")
+            //decimalFormat.roundingMode = RoundingMode.UP
 
-        tvHCost.text = hCostTxt.plus(decimalFormat.format(costPerHour))
-        tvDCost.text = decimalFormat.format(costPerDay)
-        tvWCost.text = decimalFormat.format(costPerWeek)
-        tvMCost.text = decimalFormat.format(costPerMonth)
-        tvYCost.text = decimalFormat.format(costPerYear)
-
-        //Log.i("TAG2","$hoursPerDay $cost")
-//        Log.i("TAG2",PowerCostCalculator.countHourCost(watts, cost).toString())
+            tvHCost.text = hCostTxt.plus(decimalFormat.format(costPerHour))
+            tvDCost.text = decimalFormat.format(costPerDay)
+            tvWCost.text = decimalFormat.format(costPerWeek)
+            tvMCost.text = decimalFormat.format(costPerMonth)
+            tvYCost.text = decimalFormat.format(costPerYear)
+        }
     }
 
 }
