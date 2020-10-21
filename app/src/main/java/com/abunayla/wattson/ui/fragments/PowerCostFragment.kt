@@ -22,13 +22,30 @@ import java.text.DecimalFormat
 
 class PowerCostFragment : Fragment() {
     private lateinit var viewModel: PowerCostViewModel
+
+
     private var sbProgressText: String = "1"
+
+    // UI related string holders
     private var hCostTxt: String = "NA"
+
+
+    // UI related, will take values through the viewModel
     private var cost: Double = 0.toDouble()
     private var currency: String = ""
     private var isoCode: String = ""
+
+    // UI related Var(s) (EditText)/Input
     private var watts: Int = 0
+
+    // UI related Vars (TextViews)
     private var hoursPerDay = 1
+    private var costPerHour = 0.toDouble()
+    private var costPerDay = 0.toDouble()
+    private var costPerWeek = 0.toDouble()
+    private var costPerMonth = 0.toDouble()
+    private var costPerYear = 0.toDouble()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +82,7 @@ class PowerCostFragment : Fragment() {
                 hoursPerDay = progress
                 // Recalculate cost data without fetching new data.
                 calculatePowerCost(watts)
+                updateUiItems()
             }
 
             override fun onStartTrackingTouch(croller: Croller?) {}
@@ -74,8 +92,12 @@ class PowerCostFragment : Fragment() {
 
         // Watts input (editText events)
         wattsInput.doAfterTextChanged {
-            watts = wattsInput.text.toString().toInt()
-            calculatePowerCost(watts)
+            if(wattsInput.text.isNotEmpty()){
+                watts = wattsInput.text.toString().toInt()
+                calculatePowerCost(watts)
+                updateUiItems()
+            }else
+                resetPowerCostUiItems()
         }
         // Inflate the layout for this fragment
         return view
@@ -90,11 +112,12 @@ class PowerCostFragment : Fragment() {
                     currency = it.currency
                     Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
                     calculatePowerCost(watts)
+                    updateUiItems()
                 } catch (e: Exception) {
                     cost = 0.toDouble()
-
                     isoCode = ""
                     currency = ""
+                    resetPowerCostUiItems()
                     Log.e("TAG", e.message.toString())
                 }
             })
@@ -102,16 +125,19 @@ class PowerCostFragment : Fragment() {
 
     private fun calculatePowerCost(watts: Int) {
         if (watts != 0) {
-            val costPerHour = PowerCostCalculator.countHourCost(watts, cost)
-            val costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
-            val costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
-            val costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
-            val costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
+            costPerHour = PowerCostCalculator.countHourCost(watts, cost)
+            costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
+            costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
+            costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
+            costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
+        }
+    }
 
+    private fun updateUiItems(){
 
-            val decimalFormat = DecimalFormat("#.##")
-            //decimalFormat.roundingMode = RoundingMode.UP
-
+        val decimalFormat = DecimalFormat("#.##")
+        //decimalFormat.roundingMode = RoundingMode.UP
+        if (watts != 0) {
             tvHCost.text = hCostTxt.plus(decimalFormat.format(costPerHour))
             tvDCost.text = decimalFormat.format(costPerDay)
             tvWCost.text = decimalFormat.format(costPerWeek)
@@ -120,4 +146,12 @@ class PowerCostFragment : Fragment() {
         }
     }
 
+    private fun resetPowerCostUiItems(){
+        val decimalFormat = DecimalFormat("#.##")
+        tvHCost.text = hCostTxt.plus(decimalFormat.format(0))
+        tvDCost.text = decimalFormat.format(0)
+        tvWCost.text = decimalFormat.format(0)
+        tvMCost.text = decimalFormat.format(0)
+        tvYCost.text = decimalFormat.format(0)
+    }
 }
