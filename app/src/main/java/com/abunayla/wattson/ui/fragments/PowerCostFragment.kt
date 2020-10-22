@@ -19,7 +19,6 @@ import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 import java.text.DecimalFormat
 
-
 class PowerCostFragment : Fragment() {
     private lateinit var viewModel: PowerCostViewModel
 
@@ -75,7 +74,7 @@ class PowerCostFragment : Fragment() {
 
 
         // Hours per day seek bar
-        sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener{
+        sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
                 tvSeekbarProgress.text = "$progress" + sbProgressText
                 // Update number of hours per day to take the progress
@@ -90,7 +89,10 @@ class PowerCostFragment : Fragment() {
             override fun onStopTrackingTouch(croller: Croller?) {}
         })
 
-        // Watts input (editText events)
+
+
+        //wattsInput.focusAndShowKeyboard()
+        wattsInput.requestFocus()
         wattsInput.doAfterTextChanged {
             if(wattsInput.text.isNotEmpty()){
                 watts = wattsInput.text.toString().toInt()
@@ -99,6 +101,7 @@ class PowerCostFragment : Fragment() {
             }else
                 resetPowerCostUiItems()
         }
+
         // Inflate the layout for this fragment
         return view
     }
@@ -154,4 +157,5 @@ class PowerCostFragment : Fragment() {
         tvMCost.text = decimalFormat.format(0)
         tvYCost.text = decimalFormat.format(0)
     }
+
 }

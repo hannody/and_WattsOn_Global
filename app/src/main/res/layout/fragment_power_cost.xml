@@ -43,19 +43,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/str_select_country"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/etWatts" />
 
     <com.hbb20.CountryCodePicker
         android:id="@+id/countryPicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="32dp"
         app:ccp_autoDetectCountry="true"
         app:ccp_defaultNameCode="DE"
         app:ccp_excludedCountries=""
@@ -64,8 +62,8 @@
         app:ccp_showNameCode="false"
         app:ccp_showPhoneCode="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/tvChooseCountry"
+        app:layout_constraintTop_toBottomOf="@+id/etWatts" />
 
     <TextView
         android:id="@+id/tvHCost"
@@ -75,7 +73,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/str_h_cost"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etWatts" />
+        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
 
     <TextView
         android:id="@+id/tvDCost"
@@ -118,13 +116,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Enter watts here, e.g. 1000"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

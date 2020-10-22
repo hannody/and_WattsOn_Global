@@ -10,12 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".ui.MainActivity">
+        <!--
+        android:windowSoftInputMode="stateVisible|adjustResize"
+         https://developer.android.com/training/keyboard-input/visibility
+         -->
+        <activity android:name=".ui.MainActivity"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 
