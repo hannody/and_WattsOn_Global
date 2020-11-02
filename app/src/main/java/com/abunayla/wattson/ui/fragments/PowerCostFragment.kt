@@ -5,21 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
+import com.abunayla.wattson.databinding.FragmentPowerCostBinding
 import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
-import com.hbb20.CountryCodePicker
 import com.sdsmdg.harjot.crollerTest.Croller
 import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.fragment_power_cost.*
 import java.text.DecimalFormat
 
 class PowerCostFragment : Fragment() {
+    private var _binding: FragmentPowerCostBinding? = null
+
+    private val binding get() = _binding!!
+
     private lateinit var viewModel: PowerCostViewModel
 
 
@@ -50,23 +53,26 @@ class PowerCostFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_power_cost, container, false)
-        val countryPicker = view.findViewById<CountryCodePicker>(R.id.countryPicker)
+        _binding = FragmentPowerCostBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+
         var currentSelection: String// = countryPicker.selectedCountryNameCode
-        val sbHoursPerDay = view.findViewById<View>(R.id.sbHours) as Croller
-        val wattsInput = view.findViewById<EditText>(R.id.etWatts)
+
+
 
 
         sbProgressText = getString(R.string.str_seekBar_prog_txt)
         hCostTxt = getString(R.string.str_h_cost)
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
-        currentSelection = countryPicker.selectedCountryNameCode
+        currentSelection = binding.countryPicker.selectedCountryNameCode
+
         fetchFreshCostData(viewModel, currentSelection)
 
 
         // Country Picker
-        countryPicker.setOnCountryChangeListener {
+        binding.countryPicker.setOnCountryChangeListener {
             // Change of country requires new data fetching.
             currentSelection = countryPicker.selectedCountryNameCode
             fetchFreshCostData(viewModel, currentSelection)
@@ -74,7 +80,7 @@ class PowerCostFragment : Fragment() {
 
 
         // Hours per day seek bar
-        sbHoursPerDay.setOnCrollerChangeListener(object : OnCrollerChangeListener {
+        binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
                 tvSeekbarProgress.text = "$progress" + sbProgressText
                 // Update number of hours per day to take the progress
@@ -90,20 +96,27 @@ class PowerCostFragment : Fragment() {
         })
 
 
-
         //wattsInput.focusAndShowKeyboard()
-        wattsInput.requestFocus()
-        wattsInput.doAfterTextChanged {
-            if(wattsInput.text.isNotEmpty()){
-                watts = wattsInput.text.toString().toInt()
+        binding.etWatts.requestFocus()
+        binding.apply {
+
+            etWatts.doAfterTextChanged {
+            if (etWatts.text.isNotEmpty()) {
+                watts = etWatts.text.toString().toInt()
                 calculatePowerCost(watts)
                 updateUiItems()
-            }else
+            } else
                 resetPowerCostUiItems()
         }
+    }// etWatts
 
         // Inflate the layout for this fragment
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun fetchFreshCostData(viewModel: PowerCostViewModel, currentSelection: String) {
