@@ -1,13 +1,15 @@
 package com.abunayla.wattson.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abunayla.wattson.R
 import com.abunayla.wattson.databinding.FragmentPowerCostBinding
@@ -82,7 +84,7 @@ class PowerCostFragment : Fragment() {
         // Hours per day seek bar
         binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                tvSeekbarProgress.text = "$progress" + sbProgressText
+                tvSeekbarProgress.text = "$progress  $sbProgressText"
                 // Update number of hours per day to take the progress
                 hoursPerDay = progress
                 // Recalculate cost data without fetching new data.
@@ -96,10 +98,10 @@ class PowerCostFragment : Fragment() {
         })
 
 
-        //wattsInput.focusAndShowKeyboard()
-        binding.etWatts.requestFocus()
-        binding.apply {
 
+
+        binding.apply {
+            etWatts.focusAndShowKeyboard()
             etWatts.doAfterTextChanged {
             if (etWatts.text.isNotEmpty()) {
                 watts = etWatts.text.toString().toInt()
@@ -121,7 +123,7 @@ class PowerCostFragment : Fragment() {
 
     private fun fetchFreshCostData(viewModel: PowerCostViewModel, currentSelection: String) {
         viewModel.readPowerCost(currentSelection).observe(
-            viewLifecycleOwner, Observer {
+            viewLifecycleOwner, {
                 try {
                     cost = it.cost
                     isoCode = it.iso_code
@@ -169,6 +171,44 @@ class PowerCostFragment : Fragment() {
         tvWCost.text = decimalFormat.format(0)
         tvMCost.text = decimalFormat.format(0)
         tvYCost.text = decimalFormat.format(0)
+    }
+
+
+    // Show the soft keyboard and request focus when the fragment launches
+    // Source: https://developer.squareup.com/blog/showing-the-android-keyboard-reliably/
+    fun View.focusAndShowKeyboard() {
+        /**
+         * This is to be called when the window already has focus.
+         */
+        fun View.showTheKeyboardNow() {
+            if (isFocused) {
+                post {
+                    // We still post the call, just in case we are being notified of the windows focus
+                    // but InputMethodManager didn't get properly setup yet.
+                    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
+        }
+
+        requestFocus()
+        if (hasWindowFocus()) {
+            // No need to wait for the window to get focus.
+            showTheKeyboardNow()
+        } else {
+            // We need to wait until the window gets focus.
+            viewTreeObserver.addOnWindowFocusChangeListener(
+                object : ViewTreeObserver.OnWindowFocusChangeListener {
+                    override fun onWindowFocusChanged(hasFocus: Boolean) {
+                        // This notification will arrive just before the InputMethodManager gets set up.
+                        if (hasFocus) {
+                            this@focusAndShowKeyboard.showTheKeyboardNow()
+                            // It’s very important to remove this listener once we are done.
+                            viewTreeObserver.removeOnWindowFocusChangeListener(this)
+                        }
+                    }
+                })
+        }
     }
 
 }
