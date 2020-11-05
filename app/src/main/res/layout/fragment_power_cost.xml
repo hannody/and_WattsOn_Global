@@ -79,12 +79,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Enter watts here, e.g. 1000"
+        android:hint="@string/enter_watts_text"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/tvHCost"
@@ -111,10 +112,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tvHCost">
 
         <TextView
-            android:id="@+id/textView_stats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cost in RM"
+            android:text="@string/cost_in_local_currency"
             android:textSize="18sp"
             android:textStyle="bold">
 
@@ -126,45 +126,41 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textView_daily"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:text="Daily"
+                android:text="@string/daily_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/TextView_Weekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:text="Weekly"
+                android:text="@string/weekly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/TextView_Monthly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:text="Monthly"
+                android:text="@string/monthly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/TextView_yearly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:text="Yearly"
+                android:text="@string/yearly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />

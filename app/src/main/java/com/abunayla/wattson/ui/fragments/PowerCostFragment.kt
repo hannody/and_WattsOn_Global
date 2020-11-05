@@ -28,7 +28,7 @@ class PowerCostFragment : Fragment() {
     private lateinit var viewModel: PowerCostViewModel
 
 
-    private var sbProgressText: String = "1"
+    private var sbProgressText: String =  "Hour(s) a day: "
 
     // UI related string holders
     private var hCostTxt: String = "NA"
@@ -61,11 +61,8 @@ class PowerCostFragment : Fragment() {
 
         var currentSelection: String// = countryPicker.selectedCountryNameCode
 
-
-
-
-        sbProgressText = getString(R.string.str_seekBar_prog_txt)
         hCostTxt = getString(R.string.str_h_cost)
+
         viewModel = ViewModelProvider(this).get(PowerCostViewModel::class.java)
 
         currentSelection = binding.countryPicker.selectedCountryNameCode
@@ -84,7 +81,8 @@ class PowerCostFragment : Fragment() {
         // Hours per day seek bar
         binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
             override fun onProgressChanged(croller: Croller?, progress: Int) {
-                tvSeekbarProgress.text = "$progress  $sbProgressText"
+                val progressTxt = sbProgressText + progress.toString()
+                tvSeekbarProgress.text = progressTxt
                 // Update number of hours per day to take the progress
                 hoursPerDay = progress
                 // Recalculate cost data without fetching new data.
