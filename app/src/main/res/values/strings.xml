@@ -11,7 +11,7 @@
     <!-- Seek-bar progress text -->
     <string name="str_seekBar_prog_txt">" Hour(s) a day"</string>
     <string name="enter_watts_text">Enter watts here, e.g. 1000</string>
-    <string name="cost_in_local_currency">Cost in</string>
+    <string name="cost_in_local_currency">The Cost in: </string>
     <string name="daily_text">Daily</string>
     <string name="weekly_text">Weekly</string>
     <string name="monthly_text">Monthly</string>

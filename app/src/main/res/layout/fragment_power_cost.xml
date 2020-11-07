@@ -79,6 +79,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
+        android:maxLength="4"
         android:hint="@string/enter_watts_text"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvHCost">
 
         <TextView
+            android:id="@+id/tvCostInLocalCurrency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cost_in_local_currency"

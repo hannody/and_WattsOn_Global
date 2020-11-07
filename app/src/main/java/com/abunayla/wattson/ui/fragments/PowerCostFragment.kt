@@ -29,6 +29,7 @@ class PowerCostFragment : Fragment() {
 
 
     private var sbProgressText: String =  "Hour(s) a day: "
+    private var localCurrency: String = ""
 
     // UI related string holders
     private var hCostTxt: String = "NA"
@@ -38,6 +39,7 @@ class PowerCostFragment : Fragment() {
     private var cost: Double = 0.toDouble()
     private var currency: String = ""
     private var isoCode: String = ""
+
 
     // UI related Var(s) (EditText)/Input
     private var watts: Int = 0
@@ -73,7 +75,7 @@ class PowerCostFragment : Fragment() {
         // Country Picker
         binding.countryPicker.setOnCountryChangeListener {
             // Change of country requires new data fetching.
-            currentSelection = countryPicker.selectedCountryNameCode
+            currentSelection = binding.countryPicker.selectedCountryNameCode
             fetchFreshCostData(viewModel, currentSelection)
         }
 
@@ -129,6 +131,7 @@ class PowerCostFragment : Fragment() {
                     Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
                     calculatePowerCost(watts)
                     updateUiItems()
+                    updateLocalCurrencyTV()
                 } catch (e: Exception) {
                     cost = 0.toDouble()
                     isoCode = ""
@@ -162,6 +165,12 @@ class PowerCostFragment : Fragment() {
         }
     }
 
+    private fun updateLocalCurrencyTV(){
+        val holderText = getString(R.string.cost_in_local_currency)
+        localCurrency = holderText + currency
+        binding.tvCostInLocalCurrency.text = localCurrency
+    }
+
     private fun resetPowerCostUiItems(){
         val decimalFormat = DecimalFormat("#.##")
         tvHCost.text = hCostTxt.plus(decimalFormat.format(0))
@@ -169,6 +178,7 @@ class PowerCostFragment : Fragment() {
         tvWCost.text = decimalFormat.format(0)
         tvMCost.text = decimalFormat.format(0)
         tvYCost.text = decimalFormat.format(0)
+        localCurrency = ""
     }
 
 
