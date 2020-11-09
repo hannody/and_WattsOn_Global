@@ -101,10 +101,10 @@ class PowerCostFragment : Fragment() {
 
 
         binding.apply {
-            etWatts.focusAndShowKeyboard()
-            etWatts.doAfterTextChanged {
-            if (etWatts.text.isNotEmpty()) {
-                watts = etWatts.text.toString().toInt()
+            etWatts.editText?.focusAndShowKeyboard()
+            etWatts.editText?.doAfterTextChanged {
+            if (etWatts.editText?.text?.isNotEmpty()!!) {
+                watts = etWatts.editText?.text.toString().toInt()
                 calculatePowerCost(watts)
                 updateUiItems()
             } else
