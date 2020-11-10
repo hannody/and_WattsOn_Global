@@ -19,19 +19,19 @@
         app:indicator_width="12"
         app:is_continuous="false"
         app:label=""
-        app:label_color="#000000"
+        app:label_color="#03284E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="1.0"
         app:main_circle_color="#FFFFFF"
-        app:main_circle_radius="465"
+        app:main_circle_radius="469"
         app:max="24"
-        app:progress_primary_circle_size="11"
+        app:progress_primary_circle_size="10"
         app:progress_primary_color="#2196F3"
         app:progress_secondary_color="#D5D5D5"
-        app:progress_secondary_circle_size="15"
+        app:progress_secondary_circle_size="10"
         />
 
     <TextView
@@ -136,7 +136,9 @@
         <TableRow
             android:background="@drawable/rounded_borders"
 
-            android:padding="1dp"
+            android:padding="0.8dp"
+
+            android:layout_marginBottom="2dp"
             >
 
             <TextView
@@ -185,7 +187,12 @@
         </TableRow>
         <TableRow
             android:background="@drawable/rounded_borders"
-            android:padding="1dp">
+
+            android:padding="0.8dp"
+
+            android:layout_marginTop="1dp"
+
+            >
             <TextView
                 android:id="@+id/tvDCost"
                 android:layout_width="wrap_content"
