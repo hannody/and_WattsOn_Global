@@ -14,9 +14,9 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        app:back_circle_color="#EDEDED"
-        app:indicator_color="#0B3C49"
-        app:indicator_width="10"
+        app:back_circle_color="#2196F3"
+        app:indicator_color="#08495A"
+        app:indicator_width="12"
         app:is_continuous="false"
         app:label=""
         app:label_color="#000000"
@@ -26,10 +26,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="1.0"
         app:main_circle_color="#FFFFFF"
+        app:main_circle_radius="465"
         app:max="24"
-        app:progress_primary_circle_size="10"
-        app:progress_primary_color="#4CAF50"
-        app:progress_secondary_color="#EEEEEE" />
+        app:progress_primary_circle_size="11"
+        app:progress_primary_color="#2196F3"
+        app:progress_secondary_color="#D5D5D5"
+        app:progress_secondary_circle_size="15"
+        />
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
@@ -80,6 +83,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
 
+
         android:hint="@string/enter_watts_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,14 +133,17 @@
 
 
         <TableRow
-            android:background="#EFEFEF"
-            android:padding="10dp">
+            android:background="@drawable/rounded_borders"
+
+            android:padding="1dp"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:text="@string/daily_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
@@ -146,7 +153,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:text="@string/weekly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
@@ -156,7 +164,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:text="@string/monthly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
@@ -166,23 +175,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:text="@string/yearly_text"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </TableRow>
-
         <TableRow
-            android:background="#E6E5E5"
-            android:padding="5dp">
-
+            android:background="@drawable/rounded_borders"
+            android:padding="1dp">
             <TextView
                 android:id="@+id/tvDCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FAFAFA"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -193,33 +202,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:text="50" />
+                tools:text="5" />
 
             <TextView
                 android:id="@+id/tvMCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FFFFFF"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:text="200" />
+                tools:text="5" />
 
             <TextView
                 android:id="@+id/tvYCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#FDFDFD"
+                android:layout_margin="1dp"
+                android:background="@drawable/rounded_borders_backgrounds"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:text="500" />
+                tools:text="5" />
         </TableRow>
 
     </TableLayout>
