@@ -30,9 +30,8 @@
         app:max="24"
         app:progress_primary_circle_size="10"
         app:progress_primary_color="@color/colorPrimary2"
-        app:progress_secondary_color="#D5D5D5"
         app:progress_secondary_circle_size="10"
-        />
+        app:progress_secondary_color="#D5D5D5" />
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
@@ -49,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/str_select_country"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +58,7 @@
         android:id="@+id/countryPicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         app:ccp_autoDetectCountry="true"
         app:ccp_defaultNameCode="DE"
@@ -68,9 +67,10 @@
         app:ccp_showFullName="true"
         app:ccp_showNameCode="false"
         app:ccp_showPhoneCode="false"
+        app:layout_constraintBottom_toBottomOf="@+id/tvChooseCountry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvChooseCountry"
-        app:layout_constraintTop_toBottomOf="@+id/etWatts" />
+        app:layout_constraintTop_toTopOf="@+id/tvChooseCountry" />
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -79,8 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-
+        android:layout_marginTop="32dp"
 
         android:layout_marginEnd="8dp"
         android:hint="@string/enter_watts_text"
@@ -91,7 +90,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:maxLength="4"
+            android:inputType="numberDecimal"
             android:textSize="14sp">
 
         </com.google.android.material.textfield.TextInputEditText>
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/str_h_cost"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
@@ -112,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -124,7 +124,7 @@
         <TextView
             android:id="@+id/tvCostInLocalCurrency"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:text="@string/cost_in_local_currency"
             android:textSize="14sp">
 
@@ -132,12 +132,11 @@
 
 
         <TableRow
+            android:layout_marginBottom="2dp"
+
             android:background="@drawable/rounded_borders"
 
-            android:padding="0.8dp"
-
-            android:layout_marginBottom="2dp"
-            >
+            android:padding="0.8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -179,12 +178,13 @@
                 android:textAlignment="center"
                 android:textSize="14sp" />
         </TableRow>
+
         <TableRow
+            android:layout_marginTop="1dp"
+
             android:background="@drawable/rounded_borders"
 
             android:padding="0.8dp"
-
-            android:layout_marginTop="1dp"
 
             >
 
