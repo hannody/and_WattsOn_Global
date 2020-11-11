@@ -14,8 +14,8 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        app:back_circle_color="#2196F3"
-        app:indicator_color="#08495A"
+        app:back_circle_color="#1989BCE4"
+        app:indicator_color="#2196F3"
         app:indicator_width="12"
         app:is_continuous="false"
         app:label=""
@@ -31,7 +31,7 @@
         app:progress_primary_circle_size="10"
         app:progress_primary_color="@color/colorPrimary2"
         app:progress_secondary_circle_size="10"
-        app:progress_secondary_color="#D5D5D5" />
+        app:progress_secondary_color="#4B89BCE4" />
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
