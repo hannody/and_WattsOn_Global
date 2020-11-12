@@ -16,4 +16,6 @@
     <string name="weekly_text">Weekly</string>
     <string name="monthly_text">Monthly</string>
     <string name="yearly_text">Yearly</string>
+    <string name="excluding_string">vu, tm, tc, tv, to, tk, tl, ss,sx,so,sb,sc,st,sm,ws, vc, mf,lc, kn,bl,pr,pn,pg, ps, mp, kp, nu, ne, nc,re, pm, pw,tj, nr, ms, me,mn, mc, fm, yt, mr, mq, mv,lr, ki ,je, im,xk, ht, sy, ye, ad,gi, gd, gp, gu, gn, gw, gy, gm, va, wf, aq, gg, ag, gf, pf, ga, io, ax, as, cx, fk, sh, mh, vg, ai, bj, fj, bn, bi, cf, td, cc, km, cg, ck,cw, dj, dm, gq, er, gl, fo, nf</string>
+    <string name="default_country">DE</string>
 </resources>

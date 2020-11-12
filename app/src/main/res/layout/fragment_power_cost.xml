@@ -31,7 +31,7 @@
         app:progress_primary_circle_size="10"
         app:progress_primary_color="@color/colorPrimary2"
         app:progress_secondary_circle_size="10"
-        app:progress_secondary_color="#4B89BCE4" />
+        app:progress_secondary_color="#4B89BCE4"/>
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
@@ -61,12 +61,13 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         app:ccp_autoDetectCountry="true"
-        app:ccp_defaultNameCode="DE"
-        app:ccp_excludedCountries=""
+        app:ccp_defaultNameCode="@string/default_country"
+        app:ccp_excludedCountries="@string/excluding_string"
         app:ccp_rememberLastSelection="true"
         app:ccp_showFullName="true"
         app:ccp_showNameCode="false"
         app:ccp_showPhoneCode="false"
+
         app:layout_constraintBottom_toBottomOf="@+id/tvChooseCountry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvChooseCountry"
