@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Cost Text and Values Views Holders-->
-    <string name="app_name">Watts On:Automatic Power Cost Calculator</string>
+    <string name="app_name">Watts On</string>
     <string name="str_h_cost">Cost per hour: \u0020</string>
 
 
@@ -11,7 +11,7 @@
     <!-- Seek-bar progress text -->
     <string name="str_seekBar_prog_txt">" Hour(s) a day"</string>
     <string name="enter_watts_text">Enter appliance watts here, e.g. 1000</string>
-    <string name="cost_in_local_currency">Cost Estimation in: \u0020 </string>
+    <string name="cost_in_local_currency">Other cost estimations in: \u0020 </string>
     <string name="daily_text">Daily</string>
     <string name="weekly_text">Weekly</string>
     <string name="monthly_text">Monthly</string>

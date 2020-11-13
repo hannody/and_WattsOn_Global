@@ -157,7 +157,9 @@ class PowerCostFragment : Fragment() {
         val decimalFormat = DecimalFormat("#.##")
         //decimalFormat.roundingMode = RoundingMode.UP
         if (watts != 0) {
-            tvHCost.text = hCostTxt.plus(decimalFormat.format(costPerHour))
+            //tvHCost.text = hCostTxt.plus(currency + decimalFormat.format(costPerHour))
+            //https://stackoverflow.com/questions/55115469/kotlin-android-studio-warning-do-not-concatenate-text-displayed-with-settext-u/55116421
+            tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
             tvDCost.text = decimalFormat.format(costPerDay)
             tvWCost.text = decimalFormat.format(costPerWeek)
             tvMCost.text = decimalFormat.format(costPerMonth)

@@ -35,10 +35,13 @@
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="29dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="@string/str_seekBar_prog_txt"
         android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/sbHours"
         app:layout_constraintEnd_toEndOf="@+id/sbHours"
         app:layout_constraintStart_toStartOf="@+id/sbHours" />
