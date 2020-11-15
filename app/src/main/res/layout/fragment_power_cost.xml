@@ -14,24 +14,24 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        app:back_circle_color="#1989BCE4"
-        app:indicator_color="#2196F3"
+        app:back_circle_color="@color/backCircleColor"
+        app:indicator_color="@color/indicatorColor"
         app:indicator_width="12"
         app:is_continuous="false"
         app:label=""
-        app:label_color="#03284E"
+        app:label_color="@color/labelColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="1.0"
-        app:main_circle_color="#FFFFFF"
+        app:main_circle_color="@color/mainCircleColor"
 
         app:max="24"
         app:progress_primary_circle_size="10"
         app:progress_primary_color="@color/colorPrimary2"
         app:progress_secondary_circle_size="10"
-        app:progress_secondary_color="#4B89BCE4"/>
+        app:progress_secondary_color="@color/progressSecondaryColor"/>
 
     <TextView
         android:id="@+id/tvSeekbarProgress"
@@ -48,48 +48,47 @@
 
     <TextView
         android:id="@+id/tvChooseCountry"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/str_select_country"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvStepTwo"
         app:layout_constraintTop_toBottomOf="@+id/etWatts" />
 
     <com.hbb20.CountryCodePicker
         android:id="@+id/countryPicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
         app:ccp_autoDetectCountry="true"
         app:ccp_defaultNameCode="@string/default_country"
         app:ccp_excludedCountries="@string/excluding_string"
         app:ccp_rememberLastSelection="true"
         app:ccp_showFullName="true"
         app:ccp_showNameCode="false"
-        app:ccp_showPhoneCode="false"
 
+        app:ccp_showPhoneCode="false"
         app:layout_constraintBottom_toBottomOf="@+id/tvChooseCountry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvChooseCountry"
-        app:layout_constraintTop_toTopOf="@+id/tvChooseCountry" />
+        app:layout_constraintTop_toTopOf="@+id/tvChooseCountry"
+        app:layout_constraintVertical_bias="0.32999998" />
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etWatts"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
 
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:hint="@string/enter_watts_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvStepOne"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -108,12 +107,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/str_h_cost"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -248,5 +247,49 @@
         </TableRow>
 
     </TableLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChooseCountry" />
+
+    <TextView
+        android:id="@+id/tvStepOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/stepOneText"
+        app:layout_constraintBottom_toBottomOf="@+id/etWatts"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etWatts" />
+
+    <TextView
+        android:id="@+id/tvStepTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/stepTwoText"
+        app:layout_constraintBottom_toBottomOf="@+id/tvChooseCountry"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvChooseCountry" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_baseline_rotate_right_24_white"
+        android:backgroundTint="#2196F3"
+        android:contentDescription="@string/rotateRight"
+        app:layout_constraintBottom_toBottomOf="@+id/sbHours"
+        app:layout_constraintEnd_toEndOf="@+id/sbHours"
+        app:layout_constraintStart_toStartOf="@+id/sbHours"
+        app:layout_constraintTop_toTopOf="@+id/sbHours" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

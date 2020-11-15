@@ -7,4 +7,10 @@
     <color name="colorPrimary2">#03A9F4</color>
     <color name="colorPrimaryDark2">#03A9F4</color>
     <color name="colorAccent2">#A8D0EF</color>
+    <color name="backCircleColor">#1989BCE4</color>
+    <color name="indicatorColor">#2196F3</color>
+    <color name="labelColor">#03284E</color>
+    <color name="mainCircleColor">#FFFFFF</color>
+    <color name="progressSecondaryColor">#4B89BCE4</color>
+
 </resources>
