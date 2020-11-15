@@ -21,4 +21,5 @@
     <string name="stepOneText">Step\u00201:</string>
     <string name="stepTwoText">Step\u00202:</string>
     <string name="rotateRight">Use The knob to adjust the hours per day value</string>
+
 </resources>
