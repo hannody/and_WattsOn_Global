@@ -21,5 +21,8 @@
     <string name="stepOneText">Step\u00201:</string>
     <string name="stepTwoText">Step\u00202:</string>
     <string name="rotateRight">Use The knob to adjust the hours per day value</string>
-
+    <string name="dev_info">Created by Mohanad Abu-Nayla\n\nPowered by GlobalPetrolPrices.com</string>
+    <string name="positive_btn_text">More Apps</string>
+    <string name="negative_btn_text">dismiss</string>
+    <string name="abunayla_com">http://www.abunayla.com</string>
 </resources>

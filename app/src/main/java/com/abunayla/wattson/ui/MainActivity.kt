@@ -3,9 +3,9 @@ package com.abunayla.wattson.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.abunayla.wattson.R
+import com.abunayla.wattson.ui.dialogs.AboutMeDialogFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        Toast.makeText(this, "HELLO", Toast.LENGTH_LONG).show()
+        val dialog = AboutMeDialogFragment()
+        dialog.show(supportFragmentManager, "")
         return super.onOptionsItemSelected(item)
     }
+
 }
