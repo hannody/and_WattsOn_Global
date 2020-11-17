@@ -33,7 +33,7 @@
         app:progress_secondary_circle_size="10"
         app:progress_secondary_color="@color/progressSecondaryColor"/>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSeekbarProgress"
         android:layout_width="0dp"
         android:layout_height="29dp"
@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="@+id/sbHours"
         app:layout_constraintStart_toStartOf="@+id/sbHours" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvChooseCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvHCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHCost">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvCostInLocalCurrency"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -138,7 +138,7 @@
             android:textAlignment="center"
             android:textSize="18sp">
 
-        </TextView>
+        </com.google.android.material.textview.MaterialTextView>
 
 
         <TableRow
@@ -148,7 +148,7 @@
 
             android:padding="0.8dp">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
@@ -159,7 +159,7 @@
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
@@ -170,7 +170,7 @@
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
