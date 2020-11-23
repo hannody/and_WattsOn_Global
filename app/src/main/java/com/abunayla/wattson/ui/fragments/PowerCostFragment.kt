@@ -1,6 +1,7 @@
 package com.abunayla.wattson.ui.fragments
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.abunayla.wattson.R
 import com.abunayla.wattson.databinding.FragmentPowerCostBinding
 import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.viewmodel.PowerCostViewModel
+import com.google.android.material.slider.Slider
 import com.sdsmdg.harjot.crollerTest.Croller
 import com.sdsmdg.harjot.crollerTest.OnCrollerChangeListener
 import kotlinx.android.synthetic.main.fragment_power_cost.*
@@ -79,25 +81,52 @@ class PowerCostFragment : Fragment() {
             fetchFreshCostData(viewModel, currentSelection)
         }
 
+        val orientation = resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+            binding.sbHours.visibility = View.GONE
+            binding.ivRotateRight.visibility = View.GONE
+            binding.sliderHorizontal.visibility = View.VISIBLE
 
-        // Hours per day seek bar
-        binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
-            override fun onProgressChanged(croller: Croller?, progress: Int) {
-                val progressTxt = sbProgressText + progress.toString()
-                tvSeekbarProgress.text = progressTxt
-                // Update number of hours per day to take the progress
-                hoursPerDay = progress
-                // Recalculate cost data without fetching new data.
-                calculatePowerCost(watts)
-                updateUiItems()
-            }
+            binding.sliderHorizontal.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+                override fun onStartTrackingTouch(slider: Slider) {
+                    // Responds to when slider's touch event is being started
+                }
 
-            override fun onStartTrackingTouch(croller: Croller?) {}
+                override fun onStopTrackingTouch(slider: Slider) {
+                    // Responds to when slider's touch event is being stopped
+                    val progressTxt = sbProgressText + slider.value.toInt().toString()
+                    tvSeekbarProgress.text = progressTxt
+                    // Update number of hours per day to take the progress
+                    hoursPerDay = slider.value.toInt()
+                    // Recalculate cost data without fetching new data.
+                    calculatePowerCost(watts)
+                    updateUiItems()
+                }
+            })
 
-            override fun onStopTrackingTouch(croller: Croller?) {}
-        })
+        }
+        else{
 
+            binding.sbHours.visibility = View.VISIBLE
+            binding.ivRotateRight.visibility = View.VISIBLE
+            binding.sliderHorizontal.visibility = View.GONE
 
+            // Hours per day seek bar
+            binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
+                override fun onProgressChanged(croller: Croller?, progress: Int) {
+                    val progressTxt = sbProgressText + progress.toString()
+                    tvSeekbarProgress.text = progressTxt
+                    // Update number of hours per day to take the progress
+                    hoursPerDay = progress
+                    // Recalculate cost data without fetching new data.
+                    calculatePowerCost(watts)
+                    updateUiItems()
+                }
+                override fun onStartTrackingTouch(croller: Croller?) {}
+
+                override fun onStopTrackingTouch(croller: Croller?) {}
+            })
+        }
 
 
         binding.apply {

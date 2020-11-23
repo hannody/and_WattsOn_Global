@@ -5,9 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.PowerCostFragment">
@@ -15,11 +13,10 @@
     <com.sdsmdg.harjot.crollerTest.Croller
         android:id="@+id/sbHours"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="32dp"
         app:back_circle_color="@color/backCircleColor"
         app:indicator_color="@color/indicatorColor"
         app:indicator_width="12"
@@ -29,28 +26,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="1.0"
-        app:main_circle_color="@color/mainCircleColor"
 
+        app:layout_constraintTop_toBottomOf="@+id/tvSeekbarProgress"
+        app:main_circle_color="@color/mainCircleColor"
         app:max="24"
         app:progress_primary_circle_size="10"
         app:progress_primary_color="@color/colorPrimary2"
         app:progress_secondary_circle_size="10"
-        app:progress_secondary_color="@color/progressSecondaryColor"/>
+        app:progress_secondary_color="@color/progressSecondaryColor" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvSeekbarProgress"
         android:layout_width="0dp"
         android:layout_height="29dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/str_seekBar_prog_txt"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/sbHours"
-        app:layout_constraintEnd_toEndOf="@+id/sbHours"
-        app:layout_constraintStart_toStartOf="@+id/sbHours" />
+        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvChooseCountry"
@@ -298,6 +295,25 @@
         app:layout_constraintEnd_toEndOf="@+id/sbHours"
         app:layout_constraintStart_toStartOf="@+id/sbHours"
         app:layout_constraintTop_toTopOf="@+id/sbHours" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/str_seekBar_prog_txt"
+        android:stepSize="1"
+        android:value="1.0"
+        android:valueFrom="1.0"
+        android:valueTo="24.0"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSeekbarProgress"
+        app:thumbRadius="12dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
