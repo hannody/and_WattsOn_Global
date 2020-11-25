@@ -43,9 +43,6 @@ class PowerCostFragment : Fragment() {
     private var isoCode: String = ""
 
 
-    // UI related Var(s) (EditText)/Input
-    private var watts: Int = 0
-
     // UI related Vars (TextViews)
     private var hoursPerDay = 1
     private var costPerHour = 0.toDouble()
@@ -99,7 +96,7 @@ class PowerCostFragment : Fragment() {
                     // Update number of hours per day to take the progress
                     hoursPerDay = slider.value.toInt()
                     // Recalculate cost data without fetching new data.
-                    calculatePowerCost(watts)
+                    viewModel.watts.value?.let { calculatePowerCost(it) }
                     updateUiItems()
                 }
             })
@@ -119,7 +116,7 @@ class PowerCostFragment : Fragment() {
                     // Update number of hours per day to take the progress
                     hoursPerDay = progress
                     // Recalculate cost data without fetching new data.
-                    calculatePowerCost(watts)
+                    viewModel.watts.value?.let { calculatePowerCost(it) }
                     updateUiItems()
                 }
                 override fun onStartTrackingTouch(croller: Croller?) {}
@@ -128,18 +125,24 @@ class PowerCostFragment : Fragment() {
             })
         }
 
-
-        binding.apply {
-            etWatts.editText?.focusAndShowKeyboard()
-            etWatts.editText?.doAfterTextChanged {
+if (viewModel.watts.value == 0) {
+    // EditText input for watts
+    binding.apply {
+        etWatts.editText?.focusAndShowKeyboard()
+        etWatts.editText?.doAfterTextChanged {
             if (etWatts.editText?.text?.isNotEmpty()!!) {
-                watts = etWatts.editText?.text.toString().toInt()
-                calculatePowerCost(watts)
+                viewModel.watts.value = etWatts.editText?.text.toString().toInt()
+                viewModel.watts.value?.let { calculatePowerCost(it) }
                 updateUiItems()
             } else
                 resetPowerCostUiItems()
         }
     }// etWatts
+}else{
+    // For configuration change, the value of watts comes from the viewModel.
+    binding.etWatts.editText?.setText(viewModel.watts.value.toString())
+}
+
 
         // Inflate the layout for this fragment
         return view
@@ -158,7 +161,7 @@ class PowerCostFragment : Fragment() {
                     isoCode = it.iso_code
                     currency = it.currency
                     Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
-                    calculatePowerCost(watts)
+                    viewModel.watts.value?.let { w -> calculatePowerCost(w) }
                     updateUiItems()
                     updateLocalCurrencyTV()
                 } catch (e: Exception) {
@@ -185,7 +188,7 @@ class PowerCostFragment : Fragment() {
 
         val decimalFormat = DecimalFormat("#.##")
         //decimalFormat.roundingMode = RoundingMode.UP
-        if (watts != 0) {
+        if (viewModel.watts.value != 0) {
             //tvHCost.text = hCostTxt.plus(currency + decimalFormat.format(costPerHour))
             //https://stackoverflow.com/questions/55115469/kotlin-android-studio-warning-do-not-concatenate-text-displayed-with-settext-u/55116421
             tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
