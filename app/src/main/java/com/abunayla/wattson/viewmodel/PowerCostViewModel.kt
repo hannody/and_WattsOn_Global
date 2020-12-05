@@ -15,6 +15,7 @@ import java.util.*
 class PowerCostViewModel(application: Application): AndroidViewModel(application) {
     private val repository: PowerCostRepository
     val watts = MutableLiveData<Int>()
+    var hoursPerDay: Int
 
     init {
         val dao = PowerCostDatabase.getInstance(application).dao
@@ -22,6 +23,8 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
         repository = PowerCostRepository(dao = dao)
 
         watts.value = 0
+
+        hoursPerDay = 1
     }
 
 
@@ -29,7 +32,7 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
         val data = MutableLiveData<PowerCost>()
 
         viewModelScope.launch(Dispatchers.IO) {
-            data.postValue((repository.readPowerCost(isoCode.capitalize(Locale.ROOT))))
+            data.postValue((repository.readPowerCost(isoCode.capitalize())))
         }
         return data
     }

@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.abunayla.wattson.R
 import com.abunayla.wattson.databinding.FragmentPowerCostBinding
 import com.abunayla.wattson.helper.PowerCostCalculator
@@ -44,12 +45,13 @@ class PowerCostFragment : Fragment() {
 
 
     // UI related Vars (TextViews)
-    private var hoursPerDay = 1
+
     private var costPerHour = 0.toDouble()
     private var costPerDay = 0.toDouble()
     private var costPerWeek = 0.toDouble()
     private var costPerMonth = 0.toDouble()
     private var costPerYear = 0.toDouble()
+
 
 
     override fun onCreateView(
@@ -78,23 +80,26 @@ class PowerCostFragment : Fragment() {
             fetchFreshCostData(viewModel, currentSelection)
         }
 
+
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE){
             binding.sbHours.visibility = View.GONE
             binding.ivRotateRight.visibility = View.GONE
             binding.sliderHorizontal.visibility = View.VISIBLE
 
+            binding.sliderHorizontal.value = viewModel.hoursPerDay.toFloat()
+            binding.tvSeekbarProgress.text =  sbProgressText + viewModel.hoursPerDay.toString()
+
             binding.sliderHorizontal.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-                override fun onStartTrackingTouch(slider: Slider) {
-                    // Responds to when slider's touch event is being started
-                }
+                override fun onStartTrackingTouch(slider: Slider) { }
 
                 override fun onStopTrackingTouch(slider: Slider) {
                     // Responds to when slider's touch event is being stopped
                     val progressTxt = sbProgressText + slider.value.toInt().toString()
-                    tvSeekbarProgress.text = progressTxt
+                    binding.tvSeekbarProgress.text = progressTxt
                     // Update number of hours per day to take the progress
-                    hoursPerDay = slider.value.toInt()
+                    viewModel.hoursPerDay = slider.value.toInt()
+
                     // Recalculate cost data without fetching new data.
                     viewModel.watts.value?.let { calculatePowerCost(it) }
                     updateUiItems()
@@ -106,15 +111,16 @@ class PowerCostFragment : Fragment() {
 
             binding.sbHours.visibility = View.VISIBLE
             binding.ivRotateRight.visibility = View.VISIBLE
+            binding.sbHours.progress = viewModel.hoursPerDay
             binding.sliderHorizontal.visibility = View.GONE
 
             // Hours per day seek bar
             binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
                 override fun onProgressChanged(croller: Croller?, progress: Int) {
                     val progressTxt = sbProgressText + progress.toString()
-                    tvSeekbarProgress.text = progressTxt
+                    binding.tvSeekbarProgress.text = progressTxt
                     // Update number of hours per day to take the progress
-                    hoursPerDay = progress
+                    viewModel.hoursPerDay = progress
                     // Recalculate cost data without fetching new data.
                     viewModel.watts.value?.let { calculatePowerCost(it) }
                     updateUiItems()
@@ -153,31 +159,37 @@ if (viewModel.watts.value == 0) {
         _binding = null
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.sliderHorizontal.value = viewModel.hoursPerDay.toFloat()
+    }
+
     private fun fetchFreshCostData(viewModel: PowerCostViewModel, currentSelection: String) {
         viewModel.readPowerCost(currentSelection).observe(
-            viewLifecycleOwner, {
-                try {
-                    cost = it.cost
-                    isoCode = it.iso_code
-                    currency = it.currency
-                    Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
-                    viewModel.watts.value?.let { w -> calculatePowerCost(w) }
-                    updateUiItems()
-                    updateLocalCurrencyTV()
-                } catch (e: Exception) {
-                    cost = 0.toDouble()
-                    isoCode = ""
-                    currency = ""
-                    resetPowerCostUiItems()
-                    Log.e("TAG", e.message.toString())
-                }
-            })
+            viewLifecycleOwner
+        ) {
+            try {
+                cost = it.cost
+                isoCode = it.iso_code
+                currency = it.currency
+                Log.i("TAG", " kWh Cost:$cost for:$isoCode  currency:$currency")
+                viewModel.watts.value?.let { w -> calculatePowerCost(w) }
+                updateUiItems()
+                updateLocalCurrencyTV()
+            } catch (e: Exception) {
+                cost = 0.toDouble()
+                isoCode = ""
+                currency = ""
+                resetPowerCostUiItems()
+                Log.e("TAG", e.message.toString())
+            }
+        }
     }
 
     private fun calculatePowerCost(watts: Int) {
         if (watts != 0) {
             costPerHour = PowerCostCalculator.countHourCost(watts, cost)
-            costPerDay = PowerCostCalculator.countDailyCost(hoursPerDay, costPerHour)
+            costPerDay = PowerCostCalculator.countDailyCost(viewModel.hoursPerDay, costPerHour)
             costPerWeek = PowerCostCalculator.countWeeklyCost(costPerDay)
             costPerMonth = PowerCostCalculator.countMonthlyCost(costPerDay)
             costPerYear = PowerCostCalculator.countYearlyCost(costPerDay)
@@ -191,11 +203,14 @@ if (viewModel.watts.value == 0) {
         if (viewModel.watts.value != 0) {
             //tvHCost.text = hCostTxt.plus(currency + decimalFormat.format(costPerHour))
             //https://stackoverflow.com/questions/55115469/kotlin-android-studio-warning-do-not-concatenate-text-displayed-with-settext-u/55116421
-            tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
-            tvDCost.text = decimalFormat.format(costPerDay)
-            tvWCost.text = decimalFormat.format(costPerWeek)
-            tvMCost.text = decimalFormat.format(costPerMonth)
-            tvYCost.text = decimalFormat.format(costPerYear)
+                binding.apply {
+                    tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
+                    tvDCost.text = decimalFormat.format(costPerDay)
+                    tvWCost.text = decimalFormat.format(costPerWeek)
+                    tvMCost.text = decimalFormat.format(costPerMonth)
+                    tvYCost.text = decimalFormat.format(costPerYear)
+                }
+
         }
     }
 
@@ -207,11 +222,14 @@ if (viewModel.watts.value == 0) {
 
     private fun resetPowerCostUiItems(){
         val decimalFormat = DecimalFormat("#.##")
-        tvHCost.text = hCostTxt.plus(decimalFormat.format(0))
-        tvDCost.text = decimalFormat.format(0)
-        tvWCost.text = decimalFormat.format(0)
-        tvMCost.text = decimalFormat.format(0)
-        tvYCost.text = decimalFormat.format(0)
+        binding.apply {
+            tvHCost.text = hCostTxt.plus(decimalFormat.format(0))
+            tvDCost.text = decimalFormat.format(0)
+            tvWCost.text = decimalFormat.format(0)
+            tvMCost.text = decimalFormat.format(0)
+            tvYCost.text = decimalFormat.format(0)
+        }
+
         localCurrency = ""
     }
 
@@ -252,5 +270,7 @@ if (viewModel.watts.value == 0) {
                 })
         }
     }
+
+
 
 }
