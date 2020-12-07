@@ -9,7 +9,9 @@
     <string name="str_select_country">Now, select a country:</string>
 
     <!-- Seek-bar progress text -->
-    <string name="str_seekBar_prog_txt">" Hour(s) a day"</string>
+    <string name="str_seekBar_prog_txt">" Hour(s) a day %d"</string>
+
+    <!-- PowerCostFragment-->
     <string name="enter_watts_text">Enter appliance watts here, e.g. 1000</string>
     <string name="cost_in_local_currency">Other cost estimations in: \u0020 </string>
     <string name="daily_text">Daily</string>
@@ -25,4 +27,9 @@
     <string name="positive_btn_text">More Apps</string>
     <string name="negative_btn_text">dismiss</string>
     <string name="abunayla_com">http://www.abunayla.com</string>
+    <string name="slider_value_text">Hour(s) a day: %d</string>
+    <string name="hourly_value_text">Cost per hour: \u0020 %s %s</string>
+
+
+
 </resources>

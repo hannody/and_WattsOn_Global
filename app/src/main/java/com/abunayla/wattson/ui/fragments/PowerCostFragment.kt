@@ -31,7 +31,6 @@ class PowerCostFragment : Fragment() {
     private lateinit var viewModel: PowerCostViewModel
 
 
-    private var sbProgressText: String =  "Hour(s) a day: "
     private var localCurrency: String = ""
 
     // UI related string holders
@@ -53,11 +52,11 @@ class PowerCostFragment : Fragment() {
     private var costPerYear = 0.toDouble()
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentPowerCostBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -81,22 +80,25 @@ class PowerCostFragment : Fragment() {
         }
 
 
+
+        // Seek-bars Horizontal and Circular(Vertical)
+
         val orientation = resources.configuration.orientation
         if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+            // Activate the horizontal seekbar
             binding.sbHours.visibility = View.GONE
             binding.ivRotateRight.visibility = View.GONE
             binding.sliderHorizontal.visibility = View.VISIBLE
-
             binding.sliderHorizontal.value = viewModel.hoursPerDay.toFloat()
-            binding.tvSeekbarProgress.text =  sbProgressText + viewModel.hoursPerDay.toString()
-
+            binding.tvSeekbarProgress.text = getString(R.string.slider_value_text, viewModel.hoursPerDay)
             binding.sliderHorizontal.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
+
                 override fun onStartTrackingTouch(slider: Slider) { }
 
                 override fun onStopTrackingTouch(slider: Slider) {
                     // Responds to when slider's touch event is being stopped
-                    val progressTxt = sbProgressText + slider.value.toInt().toString()
-                    binding.tvSeekbarProgress.text = progressTxt
+
+                    binding.tvSeekbarProgress.text = getString(R.string.slider_value_text, slider.value.toInt())
                     // Update number of hours per day to take the progress
                     viewModel.hoursPerDay = slider.value.toInt()
 
@@ -117,8 +119,8 @@ class PowerCostFragment : Fragment() {
             // Hours per day seek bar
             binding.sbHours.setOnCrollerChangeListener(object : OnCrollerChangeListener {
                 override fun onProgressChanged(croller: Croller?, progress: Int) {
-                    val progressTxt = sbProgressText + progress.toString()
-                    binding.tvSeekbarProgress.text = progressTxt
+
+                    binding.tvSeekbarProgress.text = getString(R.string.slider_value_text, progress)
                     // Update number of hours per day to take the progress
                     viewModel.hoursPerDay = progress
                     // Recalculate cost data without fetching new data.
@@ -131,23 +133,24 @@ class PowerCostFragment : Fragment() {
             })
         }
 
-if (viewModel.watts.value == 0) {
+
+
     // EditText input for watts
-    binding.apply {
-        etWatts.editText?.focusAndShowKeyboard()
-        etWatts.editText?.doAfterTextChanged {
-            if (etWatts.editText?.text?.isNotEmpty()!!) {
-                viewModel.watts.value = etWatts.editText?.text.toString().toInt()
+        if (viewModel.watts.value != 0) {
+            binding.etWatts.editText?.setText(viewModel.watts.value.toString())
+        }
+    binding.etWatts.apply {
+        editText?.focusAndShowKeyboard()
+        editText?.doAfterTextChanged {
+            if (editText?.text?.isNotEmpty()!!) {
+                viewModel.watts.value = editText?.text.toString().toInt()
                 viewModel.watts.value?.let { calculatePowerCost(it) }
                 updateUiItems()
             } else
                 resetPowerCostUiItems()
         }
     }// etWatts
-}else{
-    // For configuration change, the value of watts comes from the viewModel.
-    binding.etWatts.editText?.setText(viewModel.watts.value.toString())
-}
+
 
 
         // Inflate the layout for this fragment
@@ -204,7 +207,8 @@ if (viewModel.watts.value == 0) {
             //tvHCost.text = hCostTxt.plus(currency + decimalFormat.format(costPerHour))
             //https://stackoverflow.com/questions/55115469/kotlin-android-studio-warning-do-not-concatenate-text-displayed-with-settext-u/55116421
                 binding.apply {
-                    tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
+                    //tvHCost.text = "$hCostTxt $currency ".plus(decimalFormat.format(costPerHour))
+                    tvHCost.text = getString(R.string.hourly_value_text, currency, decimalFormat.format(costPerHour) )
                     tvDCost.text = decimalFormat.format(costPerDay)
                     tvWCost.text = decimalFormat.format(costPerWeek)
                     tvMCost.text = decimalFormat.format(costPerMonth)
