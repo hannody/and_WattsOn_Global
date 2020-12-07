@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.abunayla.wattson.db.PowerCost
 import com.abunayla.wattson.db.PowerCostDatabase
-import com.abunayla.wattson.helper.PowerCostCalculator
 import com.abunayla.wattson.repository.PowerCostRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,14 +31,9 @@ class PowerCostViewModel(application: Application): AndroidViewModel(application
         val data = MutableLiveData<PowerCost>()
 
         viewModelScope.launch(Dispatchers.IO) {
-            data.postValue((repository.readPowerCost(isoCode.capitalize())))
+            data.postValue((repository.readPowerCost(isoCode.capitalize(Locale.ROOT))))
         }
         return data
-    }
-
-    fun countBaseHourCost(watts: Int, cost: Double ): Double{
-
-        return PowerCostCalculator.countHourCost(watts, cost)
     }
 
 }
